@@ -31,7 +31,25 @@ namespace Persistence.Data.Configuration
             .WithMany(p => p.Medicamentos)
             .HasForeignKey(p => p.LaboratorioIdFk);
 
-            
+            builder
+            .HasMany(p => p.Proveedores)
+            .WithMany(p => p.Medicamentos)
+            .UsingEntity<MedicamentoProveedor>(
+            j => j
+            .HasOne(pt => pt.Proveedor)
+            .WithMany(t => t.MedicamentosProveedores)
+            .HasForeignKey(pt => pt.ProveedorIdFk),
+            j => j
+            .HasOne(pt => pt.Medicamento)
+            .WithMany(t => t.MedicamentosProveedores)
+            .HasForeignKey(pt => pt.MedicamentoIdFk),
+            j =>
+            {
+                j.ToTable("medicamentosProveedor");
+                j.HasKey(t => new { t.ProveedorIdFk, t.MedicamentoIdFk });
+            });
+
+
         }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Domain.Entities;
 
-public class TipoMovimiento
+public class TipoMovimiento : BaseEntity
 {
-    public string Nombre { get; set; }
+    public string Descripcion { get; set; }
 
     //Collections
     public ICollection<MovimientoMedicamento> MovimientosMedicamentos { get; set; }
