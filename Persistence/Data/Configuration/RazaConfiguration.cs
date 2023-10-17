@@ -22,6 +22,8 @@ namespace Persistence.Data.Configuration
             builder.HasOne(p => p.Especie)
             .WithMany(p => p.Razas)
             .HasForeignKey(p => p.EspecieIdFk);
+
+            
             
         }
     }

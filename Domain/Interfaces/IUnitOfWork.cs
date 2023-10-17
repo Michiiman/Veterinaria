@@ -10,7 +10,7 @@ public interface IUnitOfWork
     IEspecie Especies { get; }
     ILaboratorio Laboratorios { get; }
     IMascota Mascotas { get; }
-    IMovimientoMedicamento MovimientosMedicamento { get; }
+    IMovimientoMedicamento MovimientosMedicamentos { get; }
     IPropietario Propietarios { get; }
     IProveedor Proveedores { get; }
     IRaza Razas { get; }
@@ -18,7 +18,7 @@ public interface IUnitOfWork
     ITratamientoMedico TratamientosMedicos { get; }
     IVeterinario Veterinarios { get; }
     IUsuario Usuarios { get; }
-    IRol Rols { get; }
+    IRol Roles { get; }
     Task<int> SaveAsync();
 
 }

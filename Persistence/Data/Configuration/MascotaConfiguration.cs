@@ -28,9 +28,8 @@ namespace Persistence.Data.Configuration
             .HasForeignKey(p => p.PropietarioIdFk);
 
             builder.HasOne(p => p.Raza)
-            .WithOne(p => p.Mascota)
-            .HasForeignKey<Mascota>(p => p.RazaIdFk);
-
+            .WithMany(p => p.Mascotas)
+            .HasForeignKey(p => p.RazaIdFk);
 
         }
     }

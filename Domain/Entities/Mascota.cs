@@ -12,4 +12,5 @@ public class Mascota : BaseEntity
 
     //Collections
     public ICollection<Cita> Citas { get; set; }
+    
 }
