@@ -1,4 +1,5 @@
 using System.Reflection;
+using ApiVet.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -11,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddAplicacionServices();
+builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApiVetContext>(options =>
 {
@@ -25,6 +28,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
 

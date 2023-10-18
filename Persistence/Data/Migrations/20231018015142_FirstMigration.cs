@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreateMig : Migration
+    public partial class FirstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -425,8 +425,7 @@ namespace Persistence.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_mascota_RazaIdFk",
                 table: "mascota",
-                column: "RazaIdFk",
-                unique: true);
+                column: "RazaIdFk");
 
             migrationBuilder.CreateIndex(
                 name: "IX_medicamento_LaboratorioIdFk",

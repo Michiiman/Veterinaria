@@ -11,8 +11,8 @@ using Persistence;
 namespace Persistence.Data.Migrations
 {
     [DbContext(typeof(ApiVetContext))]
-    [Migration("20231017015042_InitialCreateMig")]
-    partial class InitialCreateMig
+    [Migration("20231018015142_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -151,8 +151,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("PropietarioIdFk");
 
-                    b.HasIndex("RazaIdFk")
-                        .IsUnique();
+                    b.HasIndex("RazaIdFk");
 
                     b.ToTable("mascota", (string)null);
                 });
@@ -485,8 +484,8 @@ namespace Persistence.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Raza", "Raza")
-                        .WithOne("Mascota")
-                        .HasForeignKey("Domain.Entities.Mascota", "RazaIdFk")
+                        .WithMany("Mascotas")
+                        .HasForeignKey("RazaIdFk")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -631,7 +630,7 @@ namespace Persistence.Data.Migrations
 
             modelBuilder.Entity("Domain.Entities.Raza", b =>
                 {
-                    b.Navigation("Mascota");
+                    b.Navigation("Mascotas");
                 });
 
             modelBuilder.Entity("Domain.Entities.Rol", b =>
