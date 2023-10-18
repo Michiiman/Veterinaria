@@ -23,10 +23,11 @@ public class ApiVetContext : DbContext
     public DbSet<TipoMovimiento> TiposMovimientos { get; set; }
     public DbSet<TratamientoMedico> TratamientosMedicos { get; set; }
     public DbSet<Veterinario> Veterinarios { get; set; }
-
     public DbSet<Usuario> Usuarios { get; set; }
     public DbSet<Rol> Roles { get; set; }
     public DbSet<RolUsuario> RolesUsuarios { get; set; }
+
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

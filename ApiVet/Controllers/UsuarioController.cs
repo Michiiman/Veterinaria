@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
+using ApiVet.Dtos;
+using Domain.Entities;
+using Domain.Interfaces;
 namespace ApiVet.Controllers
 {
     public class UsuarioController
