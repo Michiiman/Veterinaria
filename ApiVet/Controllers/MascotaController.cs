@@ -132,4 +132,16 @@ public class MascotaController : ApiController
         var dto = mapper.Map<IEnumerable<object>>(entidad);
         return Ok(dto);
     }
+
+    [HttpGet("MascotasGoldenRetriever")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<object>> MascotasGoldenRetriever()
+    {
+        var entidad = await unitOfWork.Mascotas.MascotasGoldenRetriever();
+        var dto = mapper.Map<IEnumerable<object>>(entidad);
+        return Ok(dto);
+    }
+
+
 }

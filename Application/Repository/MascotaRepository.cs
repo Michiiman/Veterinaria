@@ -111,5 +111,21 @@ public class MascotaRepository : GenericRepository<Mascota>, IMascota
         return mascotas;
     }
 
+    public async Task<IEnumerable<object>> MascotasGoldenRetriever()
+    {
+
+        var mascotas = await (
+                        from m in _context.Mascotas
+                        join r in _context.Razas on m.RazaIdFk equals r.Id
+                        where m.Raza.Nombre == "Golden Retriever"
+                        select new
+                        {
+                            Nombre=m.Nombre,
+                            Propietario=m.Propietario.Nombre,
+            
+                        }).ToListAsync();
+        return mascotas;
+    }
+
 
 }

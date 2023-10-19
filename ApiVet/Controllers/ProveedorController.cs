@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using ApiVet.Dtos;
@@ -85,4 +86,17 @@ public class ProveedorController : ApiController
         await unitOfWork.SaveAsync();
         return NoContent();
     }
+
+    //EndPoints
+
+    [HttpGet("ProveedoresMedicamentos")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<object>> ProveedoresMedicamentos()
+    {
+        var entidad = await unitOfWork.Proveedores.ProveedoresMedicamentos();
+        var dto = mapper.Map<IEnumerable<object>>(entidad);
+        return Ok(dto);
+    }
+
 }
