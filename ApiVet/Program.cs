@@ -1,5 +1,6 @@
 using System.Reflection;
 using ApiVet.Extensions;
+using ApiVet.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -13,8 +14,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAplicacionServices();
+builder.Services.ConfigureApiVersioning();
 builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContext<ApiVetContext>(options =>
 {
     string connectionString = builder.Configuration.GetConnectionString("ConexMysql");

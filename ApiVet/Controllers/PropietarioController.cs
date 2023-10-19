@@ -5,6 +5,9 @@ using Domain.Entities;
 using Domain.Interfaces;
 
 namespace ApiVet.Controllers;
+[ApiVersion("1.0")]
+[ApiVersion("1.1")]
+//[Authorize]
 
 public class PropietarioController : ApiController
 {
@@ -17,6 +20,7 @@ public class PropietarioController : ApiController
     }
 
     [HttpGet]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<PropietarioDto>>> Get()
@@ -26,6 +30,7 @@ public class PropietarioController : ApiController
     }
 
     [HttpGet("{id}")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -41,6 +46,7 @@ public class PropietarioController : ApiController
 
 
     [HttpPost]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Propietario>> Post(PropietarioDto entidadDto)
@@ -57,6 +63,7 @@ public class PropietarioController : ApiController
     }
 
     [HttpPut("{id}")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -73,6 +80,7 @@ public class PropietarioController : ApiController
     }
 
     [HttpDelete("{id}")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)
@@ -89,6 +97,7 @@ public class PropietarioController : ApiController
 
     //EndPoints
     [HttpGet("PropietariosMascotas")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<object>> PropietariosMascotas()

@@ -13,6 +13,7 @@ public interface IGenericRepository<T> where T : BaseEntity
     void Remove(T entity);
     void RemoveRange(IEnumerable<T> entities);
     void Update(T entity);
-
+    Task<(int totalRegistros, IEnumerable<T> registros)> GetAllAsync(int pageIndex, int pageSize, string _search);
+    Task<(int totalRegistros, IEnumerable<T> registros)> GetAllAsync(int pageIndex, int pageSize, int _search);
 }
 

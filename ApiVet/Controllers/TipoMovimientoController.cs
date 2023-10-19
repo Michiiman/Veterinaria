@@ -5,6 +5,9 @@ using Domain.Entities;
 using Domain.Interfaces;
 
 namespace ApiVet.Controllers;
+[ApiVersion("1.0")]
+[ApiVersion("1.1")]
+//[Authorize]
 public class TipoMovimientoController : ApiController
 {
     private readonly IUnitOfWork unitOfWork;
@@ -16,6 +19,7 @@ public class TipoMovimientoController : ApiController
     }
 
     [HttpGet]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<TipoMovimientoDto>>> Get()
@@ -25,6 +29,7 @@ public class TipoMovimientoController : ApiController
     }
 
     [HttpGet("{id}")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -40,6 +45,7 @@ public class TipoMovimientoController : ApiController
 
 
     [HttpPost]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<TipoMovimiento>> Post(TipoMovimientoDto entidadDto)
@@ -56,6 +62,7 @@ public class TipoMovimientoController : ApiController
     }
 
     [HttpPut("{id}")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -72,6 +79,7 @@ public class TipoMovimientoController : ApiController
     }
 
     [HttpDelete("{id}")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)

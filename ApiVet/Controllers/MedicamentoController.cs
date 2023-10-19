@@ -5,6 +5,9 @@ using Domain.Entities;
 using Domain.Interfaces;
 
 namespace ApiVet.Controllers;
+[ApiVersion("1.0")]
+[ApiVersion("1.1")]
+//[Authorize]
 
 public class MedicamentoController : ApiController
 {
@@ -17,6 +20,7 @@ public class MedicamentoController : ApiController
     }
 
     [HttpGet]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<MedicamentoDto>>> Get()
@@ -26,6 +30,7 @@ public class MedicamentoController : ApiController
     }
 
     [HttpGet("{id}")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -41,6 +46,7 @@ public class MedicamentoController : ApiController
 
 
     [HttpPost]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Medicamento>> Post(MedicamentoDto entidadDto)
@@ -57,6 +63,7 @@ public class MedicamentoController : ApiController
     }
 
     [HttpPut("{id}")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -73,6 +80,7 @@ public class MedicamentoController : ApiController
     }
 
     [HttpDelete("{id}")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)
@@ -90,6 +98,7 @@ public class MedicamentoController : ApiController
     //EndPoints
 
     [HttpGet("MedGenfar")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<object>>> MedGenfar()
@@ -103,6 +112,7 @@ public class MedicamentoController : ApiController
     }
 
     [HttpGet("MedMayor50k")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<object>>> MedMayor50k()

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "R4xvBvL/h4MimifKQVgzABRwRrOPvN4SIzWzbQQ1dQFTETV9x+CypOMTDlKUDW29Ol7EqT25pKXtKtvU26HlJQ==",
+  "dgSpecHash": "dMhCDQ2It4rghLGEAYlF1l9eo3BPAT17TcBtsk0dPpman2myJK/fdG4cYuOaOvRM7iaEDd5/SUJsAsJAW1zfVQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\APT01-36\\Desktop\\Veterinaria\\ApiVet\\ApiVet.csproj",
   "expectedPackageFiles": [
@@ -16,6 +16,7 @@
     "C:\\Users\\APT01-36\\.nuget\\packages\\itext.pdfhtml\\5.0.1\\itext.pdfhtml.5.0.1.nupkg.sha512",
     "C:\\Users\\APT01-36\\.nuget\\packages\\itext7.pdfhtml\\5.0.1\\itext7.pdfhtml.5.0.1.nupkg.sha512",
     "C:\\Users\\APT01-36\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.10\\microsoft.aspnetcore.authentication.jwtbearer.7.0.10.nupkg.sha512",
+    "C:\\Users\\APT01-36\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning\\5.1.0\\microsoft.aspnetcore.mvc.versioning.5.1.0.nupkg.sha512",
     "C:\\Users\\APT01-36\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.10\\microsoft.aspnetcore.openapi.7.0.10.nupkg.sha512",
     "C:\\Users\\APT01-36\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\APT01-36\\.nuget\\packages\\microsoft.dotnet.platformabstractions\\1.1.0\\microsoft.dotnet.platformabstractions.1.1.0.nupkg.sha512",

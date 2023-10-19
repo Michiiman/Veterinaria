@@ -5,6 +5,9 @@ using Domain.Entities;
 using Domain.Interfaces;
 
 namespace ApiVet.Controllers;
+[ApiVersion("1.0")]
+[ApiVersion("1.1")]
+//[Authorize]
 
 public class MascotaController : ApiController
 {
@@ -17,6 +20,7 @@ public class MascotaController : ApiController
     }
 
     [HttpGet]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<MascotaDto>>> Get()
@@ -26,6 +30,7 @@ public class MascotaController : ApiController
     }
 
     [HttpGet("{id}")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -41,6 +46,7 @@ public class MascotaController : ApiController
 
 
     [HttpPost]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Mascota>> Post(MascotaDto entidadDto)
@@ -57,6 +63,7 @@ public class MascotaController : ApiController
     }
 
     [HttpPut("{id}")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -73,6 +80,7 @@ public class MascotaController : ApiController
     }
 
     [HttpDelete("{id}")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)
@@ -91,6 +99,7 @@ public class MascotaController : ApiController
     //EndPoints
 
     [HttpGet("MascotasFelinas")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<object>>> MascotasFelinas()
@@ -104,6 +113,7 @@ public class MascotaController : ApiController
     }
 
     [HttpGet("MascotasPorEspecie")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<object>> MascotasPorEspecie()
@@ -114,6 +124,7 @@ public class MascotaController : ApiController
     }
 
     [HttpGet("MascotasVacunadas")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<object>> MascotasVacunadas()
@@ -124,6 +135,7 @@ public class MascotaController : ApiController
     }
 
     [HttpGet("MascotasPorVeterinario")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<object>> MascotasPorVeterinario()
@@ -134,6 +146,7 @@ public class MascotaController : ApiController
     }
 
     [HttpGet("MascotasGoldenRetriever")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<object>> MascotasGoldenRetriever()

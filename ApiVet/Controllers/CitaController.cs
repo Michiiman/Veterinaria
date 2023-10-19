@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using ApiVet.Helpers.Errors;
 using ApiVet.Dtos;
 using Domain.Entities;
 using Domain.Interfaces;
 
 namespace ApiVet.Controllers;
-
+[ApiVersion("1.0")]
+[ApiVersion("1.1")]
+//[Authorize]
 public class CitaController : ApiController
 {
     private readonly IUnitOfWork unitOfWork;
@@ -17,12 +20,24 @@ public class CitaController : ApiController
     }
 
     [HttpGet]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<CitaDto>>> Get()
     {
         var entidad = await unitOfWork.Citas.GetAllAsync();
         return mapper.Map<List<CitaDto>>(entidad);
+    }
+
+    [HttpGet]
+    [ApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<Pager<CitaDto>>> GetPagination([FromQuery] Params EntidadParams)
+    {
+        var entidad = await unitOfWork.Citas.GetAllAsync(EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
+        var listEntidad = mapper.Map<List<CitaDto>>(entidad.registros);
+        return new Pager<CitaDto>(listEntidad, entidad.totalRegistros, EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
     }
 
     [HttpGet("{id}")]
