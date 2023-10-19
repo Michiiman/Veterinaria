@@ -85,4 +85,17 @@ public class VeterinarioController : ApiController
         await unitOfWork.SaveAsync();
         return NoContent();
     }
+
+    //EndPoints
+
+    [HttpGet("VetCirujanos")]
+    public async Task<ActionResult<IEnumerable<object>>> VetCirujanos()
+    {
+        var entidad = await unitOfWork.Veterinarios.VetCirujanos();
+        if (entidad == null)
+        {
+            return NotFound();
+        }
+        return Ok(this.mapper.Map<IEnumerable<object>>(entidad));
+    }
 }

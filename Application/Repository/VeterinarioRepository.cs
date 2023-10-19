@@ -26,5 +26,21 @@ public class VeterinarioRepository : GenericRepository<Veterinario>, IVeterinari
 
         .FirstOrDefaultAsync(p => p.Id == id);
     }
+
+
+    public async Task<IEnumerable<object>> VetCirujanos()
+    {
+        var veterinarios= await (
+            from vet in _context.Veterinarios
+            where vet.Especialidad=="Cirujano Vascular"
+            select new 
+            {
+                Nombre=vet.Nombre,
+                Especialidad=vet.Especialidad
+            }
+        ).ToListAsync();
+
+        return veterinarios;
+    }
 }
 

@@ -6,5 +6,5 @@ namespace Domain.Interfaces;
 
 public interface IMascota : IGenericRepository<Mascota>
 {
-
+    Task<IEnumerable<object>> MascotasFelinas();
 }

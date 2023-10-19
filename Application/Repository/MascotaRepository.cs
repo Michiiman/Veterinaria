@@ -17,7 +17,7 @@ public class MascotaRepository : GenericRepository<Mascota>, IMascota
     public override async Task<IEnumerable<Mascota>> GetAllAsync()
     {
         return await _context.Mascotas
-        .Include(p => p.Raza)
+        .Include(p => p.Raza).ThenInclude(p=>p.Especie)
         .Include(p=>p.Propietario)
         .ToListAsync();
     }
@@ -28,5 +28,24 @@ public class MascotaRepository : GenericRepository<Mascota>, IMascota
         .Include(p => p.Raza)
         .Include(p=>p.Propietario)
         .FirstOrDefaultAsync(p => p.Id == id);
+    }
+
+    //Endpoints
+
+    public async Task<IEnumerable<object>> MascotasFelinas()
+    {
+        var mascotas= await (
+            from m in _context.Mascotas
+            join e in _context.Especies on m.RazaIdFk equals e.Id
+            where m.Raza.EspecieIdFk == 1
+            select new 
+            {
+                Nombre=m.Nombre,
+                Especie=e.Nombre,
+                Propietario=m.Propietario.Nombre
+            }
+        ).ToListAsync();
+
+        return mascotas;
     }
 }

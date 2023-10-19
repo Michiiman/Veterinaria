@@ -27,6 +27,22 @@ public class MedicamentoRepository : GenericRepository<Medicamento>,IMedicamento
         .Include(p => p.Laboratorio)
         .FirstOrDefaultAsync(p => p.Id == id);
     }
+
+    public async Task<IEnumerable<object>> MedGenfar()
+    {
+        var medicamentos= await (
+            from med in _context.Medicamentos
+            where med.LaboratorioIdFk == 1
+            select new 
+            {
+                Nombre=med.Nombre,
+                Laboratorio=med.Laboratorio.Nombre,
+                Cantidad=med.CantidadDisponible
+            }
+        ).ToListAsync();
+
+        return medicamentos;
+    }
 }
 
 

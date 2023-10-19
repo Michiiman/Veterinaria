@@ -86,4 +86,17 @@ public class MedicamentoController : ApiController
         await unitOfWork.SaveAsync();
         return NoContent();
     }
+
+    //EndPoints
+
+    [HttpGet("MedGenfar")]
+    public async Task<ActionResult<IEnumerable<object>>> MedGenfar()
+    {
+        var entidad = await unitOfWork.Medicamentos.MedGenfar();
+        if (entidad == null)
+        {
+            return NotFound();
+        }
+        return Ok(this.mapper.Map<IEnumerable<object>>(entidad));
+    }
 }

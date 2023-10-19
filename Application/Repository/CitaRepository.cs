@@ -28,9 +28,3 @@ public class CitaRepository : GenericRepository<Cita>,ICita
         .FirstOrDefaultAsync(p => p.Id == id);
     }
 }
-
-
-
-
-
-    

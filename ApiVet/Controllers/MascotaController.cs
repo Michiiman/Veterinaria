@@ -86,4 +86,18 @@ public class MascotaController : ApiController
         await unitOfWork.SaveAsync();
         return NoContent();
     }
+
+
+    //EndPoints
+
+    [HttpGet("MascotasFelinas")]
+    public async Task<ActionResult<IEnumerable<object>>> MascotasFelinas()
+    {
+        var entidad = await unitOfWork.Mascotas.MascotasFelinas();
+        if (entidad == null)
+        {
+            return NotFound();
+        }
+        return Ok(this.mapper.Map<IEnumerable<object>>(entidad));
+    }
 }
