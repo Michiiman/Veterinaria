@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Repository;
-public class CitaRepository : GenericRepository<Cita>,ICita
+public class CitaRepository : GenericRepository<Cita>, ICita
 {
     protected readonly ApiVetContext _context;
 
@@ -17,14 +17,18 @@ public class CitaRepository : GenericRepository<Cita>,ICita
     public override async Task<IEnumerable<Cita>> GetAllAsync()
     {
         return await _context.Citas
-        .Include(p => p.Mascota)
+        .Include(p => p.Mascota).ThenInclude(p => p.Propietario)
+        .Include(p => p.Mascota).ThenInclude(p => p.Raza).ThenInclude(p=>p.Especie)        
+        .Include(p => p.Veterinario)
         .ToListAsync();
     }
 
     public override async Task<Cita> GetByIdAsync(int id)
     {
         return await _context.Citas
-            .Include(p => p.Mascota)
+        .Include(p => p.Mascota).ThenInclude(p => p.Propietario)
+        .Include(p => p.Mascota).ThenInclude(p => p.Raza).ThenInclude(p=>p.Especie)
+        .Include(p => p.Veterinario)
         .FirstOrDefaultAsync(p => p.Id == id);
     }
 }

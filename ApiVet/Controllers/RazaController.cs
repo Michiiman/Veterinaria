@@ -85,4 +85,16 @@ public class RazaController : ApiController
         await unitOfWork.SaveAsync();
         return NoContent();
     }
+
+    //Endpoints
+
+    [HttpGet("MascotasPorRaza")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<object>> MascotasPorRaza()
+    {
+        var entidad = await unitOfWork.Razas.MascotasPorRaza();
+        var dto = mapper.Map<IEnumerable<object>>(entidad);
+        return Ok(dto);
+    }
 }

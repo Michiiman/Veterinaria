@@ -27,5 +27,25 @@ public class RazaRepository : GenericRepository<Raza>, IRaza
         .Include(p => p.Especie)
         .FirstOrDefaultAsync(p => p.Id == id);
     }
+
+    public async Task<Object> MascotasPorRaza()
+    {
+        var dato = from r in _context.Razas
+                select new
+                {
+                    Nombre = r.Nombre,
+                    Mascotas = (from m in _context.Mascotas
+                                where m.RazaIdFk == r.Id
+                                select new
+                                {
+                                    Nombre = m.Nombre,
+                                    Especie = m.Raza.Especie.Nombre
+                                }).ToList()
+                };
+
+        var Resultado = await dato.ToListAsync();
+        return Resultado;
+    }
+    
 }
 
