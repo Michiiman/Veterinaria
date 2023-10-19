@@ -91,6 +91,8 @@ public class MascotaController : ApiController
     //EndPoints
 
     [HttpGet("MascotasFelinas")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<object>>> MascotasFelinas()
     {
         var entidad = await unitOfWork.Mascotas.MascotasFelinas();
@@ -99,5 +101,35 @@ public class MascotaController : ApiController
             return NotFound();
         }
         return Ok(this.mapper.Map<IEnumerable<object>>(entidad));
+    }
+
+    [HttpGet("MascotasPorEspecie")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<object>> MascotasPorEspecie()
+    {
+        var entidad = await unitOfWork.Mascotas.MascotasPorEspecie();
+        var dto = mapper.Map<IEnumerable<object>>(entidad);
+        return Ok(dto);
+    }
+
+    [HttpGet("MascotasVacunadas")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<object>> MascotasVacunadas()
+    {
+        var entidad = await unitOfWork.Mascotas.MascotasVacunadas();
+        var dto = mapper.Map<IEnumerable<object>>(entidad);
+        return Ok(dto);
+    }
+
+    [HttpGet("MascotasPorVeterinario")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<object>> MascotasPorVeterinario()
+    {
+        var entidad = await unitOfWork.Mascotas.MascotasPorVeterinario();
+        var dto = mapper.Map<IEnumerable<object>>(entidad);
+        return Ok(dto);
     }
 }

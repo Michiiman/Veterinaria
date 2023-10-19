@@ -90,9 +90,24 @@ public class MedicamentoController : ApiController
     //EndPoints
 
     [HttpGet("MedGenfar")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<object>>> MedGenfar()
     {
         var entidad = await unitOfWork.Medicamentos.MedGenfar();
+        if (entidad == null)
+        {
+            return NotFound();
+        }
+        return Ok(this.mapper.Map<IEnumerable<object>>(entidad));
+    }
+
+    [HttpGet("MedMayor50k")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IEnumerable<object>>> MedMayor50k()
+    {
+        var entidad = await unitOfWork.Medicamentos.MedMayor50k();
         if (entidad == null)
         {
             return NotFound();

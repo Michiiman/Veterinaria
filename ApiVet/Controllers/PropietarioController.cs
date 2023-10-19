@@ -86,4 +86,15 @@ public class PropietarioController : ApiController
         await unitOfWork.SaveAsync();
         return NoContent();
     }
+
+    //EndPoints
+    [HttpGet("PropietariosMascotas")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<object>> PropietariosMascotas()
+    {
+        var entidad = await unitOfWork.Propietarios.PropietariosMascotas();
+        var dto = mapper.Map<IEnumerable<object>>(entidad);
+        return Ok(dto);
+    }
 }

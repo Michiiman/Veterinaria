@@ -5273,19 +5273,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\APT01-36\\.nuget\\packages\\": {}
+    "C:\\Users\\Camilo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\APT01-36\\Desktop\\Veterinaria\\Application\\Application.csproj",
+      "projectUniqueName": "C:\\Users\\Camilo\\Desktop\\Veterinaria\\Application\\Application.csproj",
       "projectName": "Application",
-      "projectPath": "C:\\Users\\APT01-36\\Desktop\\Veterinaria\\Application\\Application.csproj",
-      "packagesPath": "C:\\Users\\APT01-36\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\APT01-36\\Desktop\\Veterinaria\\Application\\obj\\",
+      "projectPath": "C:\\Users\\Camilo\\Desktop\\Veterinaria\\Application\\Application.csproj",
+      "packagesPath": "C:\\Users\\Camilo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Camilo\\Desktop\\Veterinaria\\Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\APT01-36\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Camilo\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -5297,11 +5297,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\APT01-36\\Desktop\\Veterinaria\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\Users\\APT01-36\\Desktop\\Veterinaria\\Domain\\Domain.csproj"
+            "C:\\Users\\Camilo\\Desktop\\Veterinaria\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\Camilo\\Desktop\\Veterinaria\\Domain\\Domain.csproj"
             },
-            "C:\\Users\\APT01-36\\Desktop\\Veterinaria\\Persistence\\Persistence.csproj": {
-              "projectPath": "C:\\Users\\APT01-36\\Desktop\\Veterinaria\\Persistence\\Persistence.csproj"
+            "C:\\Users\\Camilo\\Desktop\\Veterinaria\\Persistence\\Persistence.csproj": {
+              "projectPath": "C:\\Users\\Camilo\\Desktop\\Veterinaria\\Persistence\\Persistence.csproj"
             }
           }
         }
@@ -5331,7 +5331,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
       }
     }
   }

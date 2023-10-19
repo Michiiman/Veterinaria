@@ -43,6 +43,19 @@ public class MedicamentoRepository : GenericRepository<Medicamento>,IMedicamento
 
         return medicamentos;
     }
+
+    public async Task<IEnumerable<object>> MedMayor50k()
+    {
+        var Medicamento =  await(from m in _context.Medicamentos
+                                where m.Precio>50000
+                                select new
+                                {
+                                    Nombre=m.Nombre,
+                                    CantidadDisponible=m.CantidadDisponible,
+                                    Precio=m.Precio
+                                }).ToListAsync();
+        return Medicamento;
+    }
 }
 
 

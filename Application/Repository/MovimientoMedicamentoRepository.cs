@@ -27,5 +27,21 @@ public class MovimientoMedicamentoRepository : GenericRepository<MovimientoMedic
         .Include(p => p.TipoMovimiento)
         .FirstOrDefaultAsync(p => p.Id == id);
     }
+
+    //EndPoints
+
+    public async Task<IEnumerable<Object>> TotalMovimientos()
+    {
+        var Total= await(from d in _context.DetallesMovimientos
+                        join mm in _context.MovimientosMedicamentos on d.MovimientoMedicamentoIdFk equals mm.Id
+                        select new
+                        {
+                            IdDetalleMovimiento = d.Id,
+                            Medicamento=d.Medicamento.Nombre,
+                            Total=d.Cantidad*d.Precio
+                        }).Distinct()
+                        .ToListAsync();
+            return Total;
+    }
 }
 

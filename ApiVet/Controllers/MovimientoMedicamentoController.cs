@@ -86,5 +86,20 @@ public class MovimientoMedicamentoController : ApiController
         await unitOfWork.SaveAsync();
         return NoContent();
     }
+
+    //EndPoints
+
+    [HttpGet("TotalMovimientos")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IEnumerable<object>>> TotalMovimientos()
+    {
+        var entidad = await unitOfWork.MovimientosMedicamentos.TotalMovimientos();
+        if (entidad == null)
+        {
+            return NotFound();
+        }
+        return Ok(this.mapper.Map<IEnumerable<object>>(entidad));
+    }
 }
 
