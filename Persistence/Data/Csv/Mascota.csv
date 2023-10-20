@@ -1,0 +1,5 @@
+Id,PropietarioIdFk,RazaIdFk,Nombre,FechaNacimiento
+1,1,1,Mascota 1,2020-01-01
+2,2,2,Mascota 2,2020-02-02
+3,3,3,Mascota 3,2020-03-03
+4,1,4,Mascota 4,2020-04-04

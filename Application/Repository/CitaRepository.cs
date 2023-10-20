@@ -31,4 +31,25 @@ public class CitaRepository : GenericRepository<Cita>, ICita
         .Include(p => p.Veterinario)
         .FirstOrDefaultAsync(p => p.Id == id);
     }
+     public override async Task<(int totalRegistros, IEnumerable<Cita> registros)> GetAllAsync(int pageIndex, int pageSize, int search)
+    {
+        var query = _context.Citas as IQueryable<Cita>;
+
+        if (search != 0)
+        {
+            query = query.Where(p => p.VeterinarioIdFk == search);
+        }
+
+        query = query.OrderBy(p => p.Id);
+        var totalRegistros = await query.CountAsync();
+        var registros = await query
+            .Include(p => p.Mascota).ThenInclude(p => p.Propietario)
+            .Include(p => p.Mascota).ThenInclude(p => p.Raza).ThenInclude(p=>p.Especie)        
+            .Include(p => p.Veterinario)
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (totalRegistros, registros);
+    }
 }

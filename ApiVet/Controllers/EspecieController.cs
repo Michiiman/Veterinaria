@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using ApiVet.Dtos;
+using ApiVet.Helpers.Errors;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApiVet.Controllers;
 [ApiVersion("1.0")]
@@ -27,6 +29,17 @@ public class EspecieController : ApiController
     {
         var entidad = await unitOfWork.Especies.GetAllAsync();
         return mapper.Map<List<EspecieDto>>(entidad);
+    }
+
+    [HttpGet]
+    [ApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<Pager<EspecieDto>>> GetPagination([FromQuery] Params EntidadParams)
+    {
+        var entidad = await unitOfWork.Especies.GetAllAsync(EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
+        var listEntidad = mapper.Map<List<EspecieDto>>(entidad.registros);
+        return new Pager<EspecieDto>(listEntidad, entidad.totalRegistros, EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
     }
 
     [HttpGet("{id}")]

@@ -1,0 +1,4 @@
+Id,Nombre,CantidadDisponible,Precio,LaboratorioIdFk
+1,Medicamento A,100,50000,1
+2,Medicamento B,200,7500,2
+3,Medicamento C,150,16000,3

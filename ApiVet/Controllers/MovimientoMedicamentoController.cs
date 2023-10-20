@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using ApiVet.Dtos;
+using ApiVet.Helpers.Errors;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApiVet.Controllers;
 [ApiVersion("1.0")]
 [ApiVersion("1.1")]
-//[Authorize]
+[Authorize]
 
 public class MovimientoMedicamentoController : ApiController
 {
@@ -27,6 +29,17 @@ public class MovimientoMedicamentoController : ApiController
     {
         var entidad = await unitOfWork.MovimientosMedicamentos.GetAllAsync();
         return mapper.Map<List<MovimientoMedicamentoDto>>(entidad);
+    }
+
+    [HttpGet]
+    [ApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<Pager<MovimientoMedicamentoDto>>> GetPagination([FromQuery] Params EntidadParams)
+    {
+        var entidad = await unitOfWork.MovimientosMedicamentos.GetAllAsync(EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
+        var listEntidad = mapper.Map<List<MovimientoMedicamentoDto>>(entidad.registros);
+        return new Pager<MovimientoMedicamentoDto>(listEntidad, entidad.totalRegistros, EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
     }
 
     [HttpGet("{id}")]
@@ -110,5 +123,17 @@ public class MovimientoMedicamentoController : ApiController
         }
         return Ok(this.mapper.Map<IEnumerable<object>>(entidad));
     }
+
+    [HttpGet("TotalMovimientos")]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Pager<Object>>> TotalMovimientos([FromQuery] Params EntidadParams)
+    {
+        var entidad = await unitOfWork.MovimientosMedicamentos.TotalMovimientos(EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
+        var listEntidad = mapper.Map<List<Object>>(entidad.registros);
+        return new Pager<Object>(listEntidad, entidad.totalRegistros, EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
+    }
+
 }
 

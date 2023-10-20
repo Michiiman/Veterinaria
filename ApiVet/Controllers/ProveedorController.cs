@@ -1,14 +1,15 @@
-using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using ApiVet.Dtos;
+using ApiVet.Helpers.Errors;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApiVet.Controllers;
 [ApiVersion("1.0")]
 [ApiVersion("1.1")]
-//[Authorize]
+[Authorize]
 public class ProveedorController : ApiController
 {
     private readonly IUnitOfWork unitOfWork;
@@ -27,6 +28,17 @@ public class ProveedorController : ApiController
     {
         var entidad = await unitOfWork.Proveedores.GetAllAsync();
         return mapper.Map<List<ProveedorDto>>(entidad);
+    }
+
+    [HttpGet]
+    [ApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<Pager<ProveedorDto>>> GetPagination([FromQuery] Params EntidadParams)
+    {
+        var entidad = await unitOfWork.Proveedores.GetAllAsync(EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
+        var listEntidad = mapper.Map<List<ProveedorDto>>(entidad.registros);
+        return new Pager<ProveedorDto>(listEntidad, entidad.totalRegistros, EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
     }
 
     [HttpGet("{id}")]

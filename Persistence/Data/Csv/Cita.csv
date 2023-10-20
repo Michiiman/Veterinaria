@@ -1,0 +1,4 @@
+Id,MascotaIdFk,Fecha,Hora,Motivo,VeterinarioIdFk
+1,1,2023-01-14,09:00:00,Revisión anual,1
+2,2,2023-02-15,10:00:00,Vacunación,2
+3,3,2023-03-16,11:00:00,Control de peso,3

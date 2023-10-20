@@ -292,6 +292,37 @@ namespace Persistence.Data.Migrations
                     b.ToTable("raza", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("IdUsuarioFk")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Revoked")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("RefreshToken");
+                });
+
             modelBuilder.Entity("Domain.Entities.Rol", b =>
                 {
                     b.Property<int>("Id")
@@ -383,12 +414,6 @@ namespace Persistence.Data.Migrations
                         .HasMaxLength(3)
                         .HasColumnType("int");
 
-                    b.Property<string>("Constraseña")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar")
-                        .HasColumnName("Password");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -400,6 +425,12 @@ namespace Persistence.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar")
                         .HasColumnName("Username");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar")
+                        .HasColumnName("Password");
 
                     b.HasKey("Id");
 
@@ -543,6 +574,15 @@ namespace Persistence.Data.Migrations
                     b.Navigation("Especie");
                 });
 
+            modelBuilder.Entity("Domain.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("Domain.Entities.Usuario", "Usuario")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UsuarioId");
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("Domain.Entities.RolUsuario", b =>
                 {
                     b.HasOne("Domain.Entities.Rol", "Rol")
@@ -642,6 +682,8 @@ namespace Persistence.Data.Migrations
 
             modelBuilder.Entity("Domain.Entities.Usuario", b =>
                 {
+                    b.Navigation("RefreshTokens");
+
                     b.Navigation("RolesUsuarios");
                 });
 

@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using ApiVet.Dtos;
+using ApiVet.Helpers.Errors;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApiVet.Controllers;
 [ApiVersion("1.0")]
 [ApiVersion("1.1")]
-//[Authorize]
+[Authorize]
 public class RazaController : ApiController
 {
     private readonly IUnitOfWork unitOfWork;
@@ -26,6 +28,17 @@ public class RazaController : ApiController
     {
         var entidad = await unitOfWork.Razas.GetAllAsync();
         return mapper.Map<List<RazaDto>>(entidad);
+    }
+
+    [HttpGet]
+    [ApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<Pager<RazaDto>>> GetPagination([FromQuery] Params EntidadParams)
+    {
+        var entidad = await unitOfWork.Razas.GetAllAsync(EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
+        var listEntidad = mapper.Map<List<RazaDto>>(entidad.registros);
+        return new Pager<RazaDto>(listEntidad, entidad.totalRegistros, EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
     }
 
     [HttpGet("{id}")]
@@ -105,5 +118,16 @@ public class RazaController : ApiController
         var entidad = await unitOfWork.Razas.MascotasPorRaza();
         var dto = mapper.Map<IEnumerable<object>>(entidad);
         return Ok(dto);
+    }
+
+    [HttpGet("MascotasPorRaza")]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<Pager<Object>>> MascotasPorRaza([FromQuery] Params EntidadParams)
+    {
+        var entidad = await unitOfWork.Razas.MascotasPorRaza(EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
+        var listEntidad = mapper.Map<List<Object>>(entidad.registros);
+        return new Pager<Object>(listEntidad, entidad.totalRegistros, EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
     }
 }

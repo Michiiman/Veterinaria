@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
-using ApiVet.Helpers.Errors;
 using ApiVet.Dtos;
+using ApiVet.Helpers.Errors;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApiVet.Controllers;
 [ApiVersion("1.0")]

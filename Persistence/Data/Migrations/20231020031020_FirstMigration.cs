@@ -226,6 +226,31 @@ namespace Persistence.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "RefreshToken",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    IdUsuarioFk = table.Column<int>(type: "int", nullable: false),
+                    UsuarioId = table.Column<int>(type: "int", nullable: true),
+                    Token = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Expires = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Revoked = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshToken", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshToken_user_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "user",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "userRol",
                 columns: table => new
                 {
@@ -448,6 +473,11 @@ namespace Persistence.Data.Migrations
                 column: "EspecieIdFk");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RefreshToken_UsuarioId",
+                table: "RefreshToken",
+                column: "UsuarioId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tratamientoMedico_CitaIdFk",
                 table: "tratamientoMedico",
                 column: "CitaIdFk");
@@ -471,6 +501,9 @@ namespace Persistence.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "medicamentosProveedor");
+
+            migrationBuilder.DropTable(
+                name: "RefreshToken");
 
             migrationBuilder.DropTable(
                 name: "tratamientoMedico");

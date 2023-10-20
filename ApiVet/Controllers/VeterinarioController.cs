@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using ApiVet.Dtos;
+using ApiVet.Helpers.Errors;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApiVet.Controllers;
 [ApiVersion("1.0")]
 [ApiVersion("1.1")]
-//[Authorize]
+[Authorize]
 public class VeterinarioController : ApiController
 {
     private readonly IUnitOfWork unitOfWork;
@@ -26,6 +28,17 @@ public class VeterinarioController : ApiController
     {
         var entidad = await unitOfWork.Veterinarios.GetAllAsync();
         return mapper.Map<List<VeterinarioDto>>(entidad);
+    }
+
+    [HttpGet]
+    [ApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<Pager<VeterinarioDto>>> GetPagination([FromQuery] Params EntidadParams)
+    {
+        var entidad = await unitOfWork.Veterinarios.GetAllAsync(EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
+        var listEntidad = mapper.Map<List<VeterinarioDto>>(entidad.registros);
+        return new Pager<VeterinarioDto>(listEntidad, entidad.totalRegistros, EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
     }
 
     [HttpGet("{id}")]
@@ -108,5 +121,16 @@ public class VeterinarioController : ApiController
             return NotFound();
         }
         return Ok(this.mapper.Map<IEnumerable<object>>(entidad));
+    }
+
+    [HttpGet("VetCirujanos")]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Pager<Object>>> VetCirujanos([FromQuery] Params EntidadParams)
+    {
+        var entidad = await unitOfWork.Veterinarios.VetCirujanos(EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
+        var listEntidad = mapper.Map<List<Object>>(entidad.registros);
+        return new Pager<Object>(listEntidad, entidad.totalRegistros, EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
     }
 }

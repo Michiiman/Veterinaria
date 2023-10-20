@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using ApiVet.Dtos;
+using ApiVet.Helpers.Errors;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApiVet.Controllers;
 [ApiVersion("1.0")]
 [ApiVersion("1.1")]
-//[Authorize]
+[Authorize]
 
 public class MedicamentoController : ApiController
 {
@@ -27,6 +29,17 @@ public class MedicamentoController : ApiController
     {
         var entidad = await unitOfWork.Medicamentos.GetAllAsync();
         return mapper.Map<List<MedicamentoDto>>(entidad);
+    }
+
+    [HttpGet]
+    [ApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<Pager<MedicamentoDto>>> GetPagination([FromQuery] Params EntidadParams)
+    {
+        var entidad = await unitOfWork.Medicamentos.GetAllAsync(EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
+        var listEntidad = mapper.Map<List<MedicamentoDto>>(entidad.registros);
+        return new Pager<MedicamentoDto>(listEntidad, entidad.totalRegistros, EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
     }
 
     [HttpGet("{id}")]
@@ -111,6 +124,17 @@ public class MedicamentoController : ApiController
         return Ok(this.mapper.Map<IEnumerable<object>>(entidad));
     }
 
+    [HttpGet("MedGenfar")]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Pager<Object>>> MedGenfar([FromQuery] Params EntidadParams)
+    {
+        var entidad = await unitOfWork.Medicamentos.MedGenfar(EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
+        var listEntidad = mapper.Map<List<Object>>(entidad.registros);
+        return new Pager<Object>(listEntidad, entidad.totalRegistros, EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
+    }
+
     [HttpGet("MedMayor50k")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -123,5 +147,16 @@ public class MedicamentoController : ApiController
             return NotFound();
         }
         return Ok(this.mapper.Map<IEnumerable<object>>(entidad));
+    }
+
+    [HttpGet("MedMayor50k")]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Pager<Object>>> MedMayor50k([FromQuery] Params EntidadParams)
+    {
+        var entidad = await unitOfWork.Medicamentos.MedMayor50k(EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
+        var listEntidad = mapper.Map<List<Object>>(entidad.registros);
+        return new Pager<Object>(listEntidad, entidad.totalRegistros, EntidadParams.PageIndex, EntidadParams.PageSize, EntidadParams.Search);
     }
 }

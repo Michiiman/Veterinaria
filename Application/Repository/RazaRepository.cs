@@ -34,17 +34,53 @@ public class RazaRepository : GenericRepository<Raza>, IRaza
                 select new
                 {
                     Nombre = r.Nombre,
-                    Mascotas = (from m in _context.Mascotas
-                                where m.RazaIdFk == r.Id
-                                select new
-                                {
-                                    Nombre = m.Nombre,
-                                    Especie = m.Raza.Especie.Nombre
-                                }).ToList()
+                    Mascotas = _context.Mascotas.Distinct().Count(m => m.RazaIdFk == r.Id)
                 };
 
         var Resultado = await dato.ToListAsync();
         return Resultado;
+    }
+    public override async Task<(int totalRegistros, IEnumerable<Raza> registros)> GetAllAsync(int pageIndez, int pageSize, string search)
+    {
+        var query = _context.Razas as IQueryable<Raza>;
+
+        if(!string.IsNullOrEmpty(search))
+        {
+            query = query.Where(p => p.Nombre.ToLower().Contains(search));
+        }
+
+        query = query.OrderBy(p => p.Id);
+        var totalRegistros = await query.CountAsync();
+        var registros = await query 
+            .Include(p => p.Especie)
+            .Skip((pageIndez - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (totalRegistros, registros);
+    }
+    public virtual async Task<(int totalRegistros, object registros)> MascotasPorRaza(int pageIndez, int pageSize, string search)
+    {
+        var query = (from r in _context.Razas
+                select new
+                {
+                    Nombre = r.Nombre,
+                    Mascotas = _context.Mascotas.Distinct().Count(m => m.RazaIdFk == r.Id)
+                });
+
+        if (!string.IsNullOrEmpty(search))
+        {
+            query = query.Where(p => p.Nombre.ToLower().Contains(search));
+        }
+
+        query = query.OrderBy(p => p.Nombre);
+        var totalRegistros = await query.CountAsync();
+        var registros = await query
+            .Skip((pageIndez - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (totalRegistros, registros);
     }
     
 }

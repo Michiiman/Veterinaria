@@ -19,7 +19,7 @@ public class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
         .IsRequired()
         .HasMaxLength(50);
 
-        builder.Property(e => e.Constraseña)
+        builder.Property(e => e.Password)
         .HasColumnName("Password")
         .HasColumnType("varchar")
         .IsRequired()
